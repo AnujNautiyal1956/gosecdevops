@@ -4,6 +4,7 @@ variables:
 stages:
   - dep
   - test
+  - Check-Git-secrets
   - build
 
 #  Golang-in-Gitlab 
@@ -37,6 +38,16 @@ test:
     - *inject-gopath
   script:
     - go test ./...
+
+check-git-secrets:
+  stage: Check-Git-secrets
+  image: golang:1.10-alpine3.7
+  before_script:
+    - *inject-gopath
+  script:
+    - rm -rf trufflehog || true
+    - docker run gesellix/trufflehog --json https://gitlab.com/AnujNautiyal1308/webapp.git > trufflehog
+    - cat trufflehog    
 
 build:
   stage: build
