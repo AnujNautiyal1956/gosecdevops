@@ -41,14 +41,14 @@ test:
 
 check-git-secrets:
   stage: Check-Git-secrets
-  image: golang:1.10-alpine3.7
+  image: golang:latest
   services:
     - docker:dind
   before_script:
     - *inject-gopath
   script:
     - rm -rf trufflehog || true
-    - docker run gesellix/trufflehog --json https://gitlab.com/AnujNautiyal1308/webapp.git > trufflehog
+    - sudo docker run gesellix/trufflehog --json https://gitlab.com/AnujNautiyal1308/webapp.git > trufflehog
     - cat trufflehog    
 
 build:
