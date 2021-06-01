@@ -48,7 +48,7 @@ check-git-secrets:
     - *inject-gopath
   script:
     - rm -rf trufflehog || true
-    - sudo docker run gesellix/trufflehog --json https://gitlab.com/AnujNautiyal1308/webapp.git > trufflehog
+    - docker run gesellix/trufflehog --json https://gitlab.com/AnujNautiyal1308/webapp.git > trufflehog
     - cat trufflehog    
 
 build:
