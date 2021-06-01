@@ -42,6 +42,8 @@ test:
 check-git-secrets:
   stage: Check-Git-secrets
   image: golang:1.10-alpine3.7
+  services:
+    - docker:dind
   before_script:
     - *inject-gopath
   script:
