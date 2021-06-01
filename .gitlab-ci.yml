@@ -41,7 +41,7 @@ test:
 
 check-git-secrets:
   stage: Check-Git-secrets
-  image: golang:latest
+  image: docker:latest
   services:
     - docker:dind
   before_script:
