@@ -5,6 +5,7 @@ stages:
   - dep
   - test
   - Check-Git-secrets
+  - Source-composition-Analysis
   - build
 
 #  Golang-in-Gitlab 
@@ -50,6 +51,18 @@ check-git-secrets:
     - rm -rf trufflehog || true
     - docker run gesellix/trufflehog --json https://gitlab.com/AnujNautiyal1308/webapp.git > trufflehog
     - cat trufflehog    
+
+source-composition-analysis:
+  stage: Source-composition-Analysis
+  image: golang:1.10-alpine3.7
+  before_script:
+    - *inject-gopath
+  script:
+    - rm pwasp* || true
+    - wget "https://gitlab.com/AnujNautiyal1308/gosecdevops/-/raw/master/owasp-dependency-check.sh"
+    - chmod +x owasp-dependency-check.sh
+    - bash owasp-dependency-check.sh
+    - cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml
 
 build:
   stage: build
