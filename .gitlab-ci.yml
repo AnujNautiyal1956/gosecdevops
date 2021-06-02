@@ -62,7 +62,6 @@ source-composition-analysis:
   script:
     - chmod +x owasp-dependency-check.sh
     - ./owasp-dependency-check.sh 
-    - owasp-dependency-check-report -set-exit-code > dependency-check-report.xml
   artifacts:
     when: always
     paths:
