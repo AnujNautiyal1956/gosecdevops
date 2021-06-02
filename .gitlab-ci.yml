@@ -55,6 +55,8 @@ check-git-secrets:
 source-composition-analysis:
   stage: Source-composition-Analysis
   image: ubuntu:latest
+  services:
+    - docker:dind
   before_script:
     - *inject-gopath
   script:
