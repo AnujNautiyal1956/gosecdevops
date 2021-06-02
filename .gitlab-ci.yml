@@ -58,8 +58,7 @@ source-composition-analysis:
   before_script:
     - *inject-gopath
   script:
-    - rm pwasp* || true
-    - wget "https://gitlab.com/AnujNautiyal1308/gosecdevops/-/raw/master/owasp-dependency-check.sh"
+    - rm owasp* || true
     - chmod +x owasp-dependency-check.sh
     - bash owasp-dependency-check.sh
     - cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml
