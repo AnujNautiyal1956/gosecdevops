@@ -61,9 +61,11 @@ source-composition-analysis:
     - *inject-gopath
   script:
     - chmod +x owasp-dependency-check.sh
-    - ./owasp-dependency-check.sh
-    - cat /reports/dependency-check-report.xml > dependency-check-report.xml
-
+    - ./owasp-dependency-check.sh | owasp-dependency-check-report -set-exit-code > /reports/dependency-check-report.xml
+  artifacts:
+    when: always
+    paths:
+      - /reports/dependency-check-report.xml
 build:
   stage: build
   dependencies:
