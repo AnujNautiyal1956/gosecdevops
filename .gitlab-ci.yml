@@ -59,7 +59,7 @@ source-composition-analysis:
     - *inject-gopath
   script:
     - chmod +x owasp-dependency-check.sh
-    -  bash owasp-dependency-check.sh
+    - bash owasp-dependency-check.sh
     - cat /reports/dependency-check-report.xml >> dependency-check-report.xml
 
 build:
