@@ -62,7 +62,7 @@ source-composition-analysis:
   script:
     - chmod +x owasp-dependency-check.sh
     - ./owasp-dependency-check.sh
-    - cat /reports/dependency-check-report.xml >> dependency-check-report.xml
+    - cat /reports/dependency-check-report.xml > dependency-check-report.xml
 
 build:
   stage: build
