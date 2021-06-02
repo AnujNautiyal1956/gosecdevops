@@ -58,10 +58,9 @@ source-composition-analysis:
   before_script:
     - *inject-gopath
   script:
-    - rm owasp* || true
-    - chmod +x owasp-dependency-check.sh
-    - bash owasp-dependency-check.sh
-    - cat /reports/dependency-check-report.xml
+    - chmod +x /scripts/owasp-dependency-check.sh
+    - bash /scripts/owasp-dependency-check.sh
+    - cat /reports/dependency-check-report.xml >> dependency-check-report.xml
 
 build:
   stage: build
