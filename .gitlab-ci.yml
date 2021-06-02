@@ -54,12 +54,12 @@ check-git-secrets:
 
 source-composition-analysis:
   stage: Source-composition-Analysis
-  image: golang:1.10-alpine3.7
+  image: ubuntu:latest
   before_script:
     - *inject-gopath
   script:
     - chmod +x owasp-dependency-check.sh
-    - bash owasp-dependency-check.sh
+    -  bash owasp-dependency-check.sh
     - cat /reports/dependency-check-report.xml >> dependency-check-report.xml
 
 build:
