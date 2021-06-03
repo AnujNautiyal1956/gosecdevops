@@ -7,7 +7,7 @@ stages:
   - Check-Git-secrets
   - Source-composition-Analysis
   - SAST Sonar analyze
-  - build
+  - build&push
 
 #  Golang-in-Gitlab 
 .anchors:
@@ -63,6 +63,8 @@ source-composition-analysis:
   script:
     - chmod +x owasp-dependency-check.sh
     - ./owasp-dependency-check.sh  
+  only:
+    - merge-requests  
   artifacts:
     when: always
     paths:
@@ -92,13 +94,15 @@ SAST:
       when: on_success
     - when: never
 
-build:
-  stage: build
-  dependencies:
-    - dep
-  image: docker:17
+docker-build-push:
+  # Official docker image.
+  image: docker:latest
+  stage: build&push
   services:
     - docker:dind
+  before_script:
+    - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
   script:
-    - docker build -t app .
+    - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" .
+    - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
 
