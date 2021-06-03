@@ -63,26 +63,36 @@ source-composition-analysis:
   script:
     - chmod +x owasp-dependency-check.sh
     - ./owasp-dependency-check.sh 
+  only:
+    - merge_requests  
   artifacts:
     when: always
     paths:
       - /reports/dependency-check-report.xml
-  only:
-    branches    
 
 SAST:
   stage: SAST Sonar analyze
   image:
     name: sonarsource/sonar-scanner-cli:latest
-  services:
-    - docker:dind  
-  script:  
-    - docker run \
-      --rm \
-      -e SONAR_HOST_URL="http://${SONARQUBE_URL}" \
-      -e SONAR_LOGIN="${SONARQUBE_TOKEN}" \
-      -v "${YOUR_REPO}:/usr/src" \
-      sonarsource/sonar-scanner-cli
+    entrypoint: [""]
+  variables:
+    # Defines the location of the analysis task cache
+    SONAR_USER_HOME: "${CI_PROJECT_DIR}/.sonar"
+    # Shallow cloning needs to be disabled.
+    # See https://docs.sonarqube.org/latest/analysis/gitlab-cicd/.
+    GIT_DEPTH: 0
+  cache:
+    key: "${CI_JOB_NAME}"
+    paths:
+      - .sonar/cache
+  script:
+    - sonar-scanner
+  rules:
+    # SonarQube CommunityEdition only supports analyzing a single branch.
+    # So only run on master.
+    - if: '$CI_COMMIT_BRANCH == "master"'
+      when: on_success
+    - when: never
 
 build:
   stage: build
