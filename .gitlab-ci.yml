@@ -62,9 +62,7 @@ source-composition-analysis:
     - *inject-gopath
   script:
     - chmod +x owasp-dependency-check.sh
-    - ./owasp-dependency-check.sh 
-  only:
-    - merge_requests  
+    - ./owasp-dependency-check.sh  
   artifacts:
     when: always
     paths:

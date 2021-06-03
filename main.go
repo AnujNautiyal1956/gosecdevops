@@ -1,24 +1,24 @@
 package main
 
 import (
-    "log"
-    "net/http"
+	"log"
+	"net/http"
 
-    "github.com/gorilla/mux"
+	"github.com/gorilla/mux"
 )
 
 var port = "8080"
 
 func main() {
-    log.Fatal(http.ListenAndServe(":"+port, router()))
+	log.Fatal(http.ListenAndServe(":"+port, router()))
 }
 
 func router() http.Handler {
-    r := mux.NewRouter()
-    r.Path("/greeting").Methods(http.MethodGet).HandlerFunc(greet)
-    return r
+	r := mux.NewRouter()
+	r.Path("/greeting").Methods(http.MethodGet).HandlerFunc(greet)
+	return r
 }
 
 func greet(w http.ResponseWriter, req *http.Request) {
-    _, _ = w.Write([]byte("Hello, world!"))
+	_, _ = w.Write([]byte("This is SecDevOps Demo By Anuj Nautiyal!"))
 }
